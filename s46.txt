@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rally — Notes on the Game of Badminton</title>
+<meta name="description" content="An informational page about badminton — its game, technique, and history.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F1F4EF;
+    --panel: #E7EDE3;
+    --ink: #142A20;
+    --green: #1F5D40;
+    --navy: #22344B;
+    --amber: #C97F2D;
+    --line: #CBD6C6;
+    --muted: #5B6B5F;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3{ font-family: 'Space Grotesk', sans-serif; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .fade-in{ animation: fadeUp 0.9s ease-out both; }
+    .fade-in.delay-1{ animation-delay: 0.15s; }
+    .fade-in.delay-2{ animation-delay: 0.3s; }
+    @keyframes fadeUp{
+      from{ opacity:0; transform: translateY(10px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+  }
+
+  a{ color: var(--green); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--green); outline-offset: 3px; }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+
+  svg{ display:block; }
+
+  /* ---- Nav ---- */
+  nav{ padding: 24px 40px; border-bottom: 1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Space Grotesk',sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.01em; }
+  .nav-links{ display:flex; gap: 30px; font-size: 0.92rem; }
+  .nav-links a{ text-decoration: none; color: var(--muted); }
+  .nav-links a:hover{ color: var(--ink); }
+
+  /* ---- Hero ---- */
+  header.hero{ padding: 64px 0; border-bottom: 1px solid var(--line); }
+  header.hero .wrap{
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  header.hero .kicker{ color: var(--green); font-size: 0.95rem; margin: 0 0 16px; font-weight:500; }
+  header.hero h1{
+    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    font-weight: 600;
+    line-height: 1.18;
+    margin: 0 0 22px;
+    max-width: 16ch;
+    color: var(--navy);
+  }
+  header.hero p.lede{ font-size: 1.08rem; color: #33443A; max-width: 46ch; margin: 0 0 26px; }
+  .hero-stats{ display: flex; gap: 30px; }
+  .hero-stats div strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size: 1.4rem; color: var(--navy); }
+  .hero-stats div span{ font-size: 0.78rem; color: var(--muted); }
+  .hero-art{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px;
+    aspect-ratio: 4/3.2;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  section{ padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section h2{ font-size: 1.45rem; font-weight: 600; margin: 0 0 30px; color: var(--navy); }
+
+  /* ---- About: text + illustration ---- */
+  .about .wrap{ display: grid; grid-template-columns: 1fr 320px; gap: 56px; align-items: center; }
+  .about p{ margin: 0 0 16px; max-width: 54ch; }
+  .about p:last-child{ margin-bottom: 0; }
+  .about-art{ background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+
+  /* ---- Why badminton: 3 column grid with icons ---- */
+  .why-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .why-card{ padding: 28px 30px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .why-card svg{ margin-bottom: 14px; }
+  .why-card h3{ font-size: 1.05rem; font-weight: 600; margin: 0 0 8px; }
+  .why-card p{ margin: 0; color: #33443A; font-size: 0.95rem; }
+
+  /* ---- Technique + court diagram side by side ---- */
+  .technique .wrap{ display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .strokes{ list-style: none; margin: 0; padding: 0; }
+  .strokes li{
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+  }
+  .strokes li:first-child{ padding-top: 0; }
+  .strokes li:last-child{ border-bottom: none; }
+  .strokes .name{ font-family:'Space Grotesk',sans-serif; font-weight: 600; color: var(--navy); }
+  .strokes .desc{ color: #33443A; font-size: 0.95rem; }
+  .court-diagram{ background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+
+  /* ---- History timeline ---- */
+  .timeline{ display: flex; flex-direction: column; }
+  .t-row{
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .t-row:first-child{ padding-top: 0; }
+  .t-row:last-child{ border-bottom: none; }
+  .t-row .year{ font-family:'Space Grotesk',sans-serif; font-weight: 700; color: var(--amber); font-size: 1.1rem; }
+  .t-row p{ margin: 0; color: #33443A; }
+
+  /* ---- Gear grid with icons ---- */
+  .gear-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .gear-item{ text-align: left; }
+  .gear-item .icon-box{
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 22px; display:flex; align-items:center; justify-content:center; margin-bottom: 14px;
+    aspect-ratio: 1.4/1;
+  }
+  .gear-item h3{ font-size: 0.98rem; font-weight: 600; margin: 0 0 4px; }
+  .gear-item p{ margin: 0; font-size: 0.88rem; color: var(--muted); }
+
+  /* ---- Community / contact ---- */
+  .community{ border-bottom: none; }
+  .community .wrap{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
+  .community p{ margin: 0; grid-column: span 2; max-width: 56ch; color: #33443A; }
+  .contact-block{ display: flex; flex-direction: column; gap: 12px; }
+  .contact-block a{ text-decoration: none; border-bottom: 1px solid var(--green); padding-bottom: 1px; width: fit-content; }
+  .contact-block a:hover{ color: var(--amber); border-color: var(--amber); }
+
+  footer{ padding: 26px 0 44px; }
+  footer .wrap{ display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); }
+
+  @media (max-width: 940px){
+    header.hero .wrap{ grid-template-columns: 1fr; }
+    .about .wrap{ grid-template-columns: 1fr; }
+    .why-grid{ grid-template-columns: 1fr 1fr; }
+    .technique .wrap{ grid-template-columns: 1fr; }
+    .gear-grid{ grid-template-columns: 1fr 1fr; }
+    .community .wrap{ grid-template-columns: 1fr; }
+    .community p{ grid-column: 1; }
+  }
+  @media (max-width: 560px){
+    .wrap{ padding: 0 22px; }
+    nav{ padding: 20px; }
+    .why-grid{ grid-template-columns: 1fr; }
+    .gear-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Rally</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#technique">Technique</a>
+      <a href="#history">History</a>
+      <a href="#gear">Gear</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker fade-in">Notes on the game of badminton</p>
+      <h1 class="fade-in delay-1">The fastest racket sport, played one shuttle at a time</h1>
+      <p class="lede fade-in delay-2">A page about the game itself — how it's played, where it came from, and what it takes to hit a shuttlecock that can leave the racket faster than any ball in sport.</p>
+      <div class="hero-stats fade-in delay-2">
+        <div><strong>493 km/h</strong><span>fastest smash on record</span></div>
+        <div><strong>1873</strong><span>modern game codified</span></div>
+        <div><strong>6.1m</strong><span>net height at the poles</span></div>
+      </div>
+    </div>
+    <div class="hero-art fade-in delay-2">
+      <svg width="100%" height="100%" viewBox="0 0 240 200" fill="none">
+        <rect x="10" y="10" width="220" height="180" rx="4" stroke="#1F5D40" stroke-width="1.5"/>
+        <line x1="10" y1="100" x2="230" y2="100" stroke="#1F5D40" stroke-width="1.5"/>
+        <line x1="120" y1="10" x2="120" y2="190" stroke="#1F5D40" stroke-width="1" stroke-dasharray="4 4"/>
+        <rect x="30" y="30" width="180" height="140" stroke="#1F5D40" stroke-width="1"/>
+        <circle cx="120" cy="60" r="7" fill="#C97F2D"/>
+        <path d="M120 60 L120 40 M120 60 L108 46 M120 60 L132 46" stroke="#C97F2D" stroke-width="1.4"/>
+        <line x1="60" y1="150" x2="90" y2="115" stroke="#22344B" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="55" cy="158" r="5" fill="#22344B"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="about">
+  <div class="wrap">
+    <div>
+      <h2>About the game</h2>
+      <p>Badminton is played with a racket and a feathered shuttlecock across a net, in singles or doubles, on a court just over thirteen metres long. Points are won by landing the shuttle in the opponent's court or forcing an error — first to twenty-one, best of three games.</p>
+      <p>What sets it apart from other racket sports is the shuttle itself. It doesn't bounce, it decelerates sharply after being struck, and it can be hit harder relative to its weight than almost any object in sport — which is what makes the smash so devastating and the net game so delicate.</p>
+    </div>
+    <div class="about-art">
+      <svg width="100%" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="70" r="26" fill="none" stroke="#1F5D40" stroke-width="2"/>
+        <path d="M100 96 L100 150" stroke="#1F5D40" stroke-width="4" stroke-linecap="round"/>
+        <path d="M80 70 L60 45 M100 60 L82 30 M120 70 L140 45 M92 60 L74 32 M108 60 L126 32" stroke="#C97F2D" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="100" cy="70" rx="6" ry="9" fill="#FCFBF6" stroke="#22344B" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2>Why the game holds up</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="14" stroke="#1F5D40" stroke-width="2"/><path d="M17 9v8l6 4" stroke="#1F5D40" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3>Speed</h3>
+        <p>Reaction windows at the top level are measured in fractions of a second — among the shortest of any racket sport.</p>
+      </div>
+      <div class="why-card">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><path d="M8 26 L26 8 M8 8 L26 26" stroke="#1F5D40" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3>Precision</h3>
+        <p>A shuttle that doesn't bounce rewards placement over power — a soft net shot can beat a hard smash.</p>
+      </div>
+      <div class="why-card">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none"><path d="M6 26c4-10 8-16 11-16s7 6 11 16" stroke="#1F5D40" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        <h3>Endurance</h3>
+        <p>A single rally can involve dozens of direction changes — footwork carries as much of the game as the racket arm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="technique" class="technique">
+  <div class="wrap">
+    <div>
+      <h2>Core strokes</h2>
+      <ul class="strokes">
+        <li><span class="name">Clear</span><span class="desc">A deep shot sent to the back of the opponent's court, used to reset a rally and buy time.</span></li>
+        <li><span class="name">Drop shot</span><span class="desc">Played softly just over the net, meant to fall close to it and draw the opponent forward.</span></li>
+        <li><span class="name">Smash</span><span class="desc">A steep, downward strike hit with full power — the primary attacking shot in the game.</span></li>
+        <li><span class="name">Net shot</span><span class="desc">A delicate tap played right at the net, relying on touch rather than force.</span></li>
+        <li><span class="name">Drive</span><span class="desc">A flat, fast exchange at mid-court height, common in doubles play.</span></li>
+      </ul>
+    </div>
+    <div class="court-diagram">
+      <svg width="100%" viewBox="0 0 260 300" fill="none">
+        <rect x="10" y="10" width="240" height="280" stroke="#1F5D40" stroke-width="1.5"/>
+        <line x1="10" y1="150" x2="250" y2="150" stroke="#22344B" stroke-width="2"/>
+        <line x1="10" y1="55" x2="250" y2="55" stroke="#1F5D40" stroke-width="1"/>
+        <line x1="10" y1="245" x2="250" y2="245" stroke="#1F5D40" stroke-width="1"/>
+        <line x1="130" y1="10" x2="130" y2="290" stroke="#1F5D40" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="30" y1="10" x2="30" y2="290" stroke="#1F5D40" stroke-width="1"/>
+        <line x1="230" y1="10" x2="230" y2="290" stroke="#1F5D40" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="history">
+  <div class="wrap">
+    <h2>A short history</h2>
+    <div class="timeline">
+      <div class="t-row"><span class="year">1870s</span><p>British officers stationed in India adapt a children's game called battledore and shuttlecock into a net game at Badminton House, Gloucestershire — giving the sport its name.</p></div>
+      <div class="t-row"><span class="year">1893</span><p>The Badminton Association of England is founded and publishes the first formal set of rules.</p></div>
+      <div class="t-row"><span class="year">1934</span><p>The International Badminton Federation is established, later renamed the Badminton World Federation.</p></div>
+      <div class="t-row"><span class="year">1992</span><p>Badminton is added to the Olympic programme at the Barcelona Games, cementing its place as a global sport.</p></div>
+      <div class="t-row"><span class="year">Today</span><p>The game is most widely played and followed across Asia, with China, Indonesia, and India among its strongest competitive nations.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gear">
+  <div class="wrap">
+    <h2>The essentials</h2>
+    <div class="gear-grid">
+      <div class="gear-item">
+        <div class="icon-box">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="22" r="16" stroke="#1F5D40" stroke-width="2"/><line x1="30" y1="38" x2="30" y2="56" stroke="#1F5D40" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Racket</h3>
+        <p>Light carbon-fibre frames, usually under 100g, strung between 20–30 lbs of tension.</p>
+      </div>
+      <div class="gear-item">
+        <div class="icon-box">
+          <svg width="50" height="50" viewBox="0 0 50 50" fill="none"><ellipse cx="25" cy="14" rx="6" ry="9" stroke="#22344B" stroke-width="2"/><path d="M18 20 L10 40 M25 23 L20 44 M32 20 L40 40" stroke="#C97F2D" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Shuttlecock</h3>
+        <p>Sixteen goose feathers set into a cork base, or a synthetic equivalent for practice.</p>
+      </div>
+      <div class="gear-item">
+        <div class="icon-box">
+          <svg width="60" height="30" viewBox="0 0 60 30" fill="none"><line x1="4" y1="26" x2="56" y2="26" stroke="#1F5D40" stroke-width="2"/><path d="M4 26 V6 M56 26 V6" stroke="#22344B" stroke-width="2"/><line x1="4" y1="6" x2="56" y2="6" stroke="#22344B" stroke-width="1.5" stroke-dasharray="2 2"/></svg>
+        </div>
+        <h3>Net</h3>
+        <p>Set at 1.55m at the posts and 1.524m at the centre, exactly at head height for most players.</p>
+      </div>
+      <div class="gear-item">
+        <div class="icon-box">
+          <svg width="45" height="45" viewBox="0 0 45 45" fill="none"><path d="M8 40 C8 25 15 10 22 10 C29 10 36 25 36 40" stroke="#1F5D40" stroke-width="2" fill="none"/></svg>
+        </div>
+        <h3>Court shoes</h3>
+        <p>Non-marking soles built for sharp lateral cuts, not the forward-only grip of running shoes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="community">
+  <div class="wrap">
+    <h2 style="grid-column: 1 / -1;">Get in touch</h2>
+    <p>If you play, teach, or are just curious about the game, write in. This page is meant to grow with whatever's worth adding — a correction, a story, a question about a stroke.</p>
+    <div class="contact-block">
+      <a href="mailto:hello@rally.example">hello@rally.example</a>
+      <a href="#">RSS feed</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Rally</span>
+    <span>notes on the game of badminton</span>
+  </div>
+</footer>
+
+</body>
+</html>
